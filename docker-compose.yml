@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  nodejs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: video-manolo-fronted
+    container_name: video-manolo-fronted
+    restart: unless-stopped
+    environment:
+      - VUE_APP_URL=http://159.203.87.62:3000/api
+    hostname: video-manolo-fronted-app
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/usr/src/vue-app/
+      - node_modules:/usr/src/vue-app/node_modules
+    networks:
+      - app-network-vue
+    command: npm run serve
+
+networks:
+  app-network-vue:
+    driver: bridge
+
+volumes:
+  node_modules:
